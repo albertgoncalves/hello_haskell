@@ -32,10 +32,6 @@ addPairs (a, b) (c, d) = (a + c, b + d)
 sumListPairs :: Foldable t => t (Float, Float) -> (Float, Float)
 sumListPairs pairs = foldr addPairs (0, 0) pairs
 
-
--- -*-
-
-
 main :: IO ()
 main = do
     let exPairs    = randomPairs 1 3

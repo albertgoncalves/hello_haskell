@@ -9,8 +9,10 @@ listRandomFloats n = take n $ randoms $ seedTFGen (0, 0, 0, 0)
 
 convertToVec :: [Float] -> U.Vector Float
 convertToVec x = U.fromList x
--- Not the fastest solution, but usable for now. Provides the benefit of using
--- a seed value as well as not requiring any additional packages.
+-- not the fastest solution, but usable for now
+
+-- provides the benefit of using a seed value as well as not requiring any
+-- additional packages
 
 myRandVec :: U.Vector Float
 myRandVec = convertToVec $ listRandomFloats 10000

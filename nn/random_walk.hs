@@ -4,7 +4,7 @@ import Data.Array.IArray (Array, accumArray, assocs)
 import System.Random     (mkStdGen, Random, randomR, random, randoms, StdGen)
 import System.Random.TF  (TFGen, seedTFGen)
 
--- One way.
+-- one way
 rollDice :: TFGen -> (Int, TFGen)
 rollDice = randomR (1, 6)
 
@@ -19,7 +19,7 @@ betterSeed = do
     let results = map (\i -> getFirst $ seedTFGen (0, 0, 0, i)) [0..53667]
     mapM_ print $ assocs $ histogram results
 
--- Another way.
+-- or another
 random1 :: (Random a) => Int -> (a, StdGen)
 random1 seed = random (mkStdGen seed)
 

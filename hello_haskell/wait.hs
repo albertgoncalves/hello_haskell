@@ -16,9 +16,8 @@ main = do
     --     Suppress this warning by saying
     --       ‘_ <- forkIO (...)
 
-    -- Pretend there is some actual work to do.
-    _ <- forkIO (do sleepSeconds seconds
-                    putStrLn "Calculated result!"
+    _ <- forkIO (do sleepSeconds seconds          -- pretend there is some
+                    putStrLn "Calculated result!" -- actual work to do
                     putMVar result (42 :: Int)
                 )
 

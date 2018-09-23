@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
--- https://wiki.haskell.org/Euler_problems/11_to_20
+-- via https://wiki.haskell.org/Euler_problems/11_to_20
 
 import Data.List (group)
 
