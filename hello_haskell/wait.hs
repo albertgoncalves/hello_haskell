@@ -15,7 +15,6 @@ main = do
     --       ‘GHC.Conc.Sync.ThreadId’
     --     Suppress this warning by saying
     --       ‘_ <- forkIO (...)
-
     _ <- forkIO (do sleepSeconds seconds          -- pretend there is some
                     putStrLn "Calculated result!" -- actual work to do
                     putMVar result (42 :: Int)
