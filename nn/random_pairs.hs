@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -dcore-lint #-}
 {-# OPTIONS_GHC -Wall #-}
 
 import System.Random
@@ -28,7 +27,7 @@ mapPairs :: (t -> b) -> [(t, t)] -> [(b, b)]
 mapPairs f pairs = map (\(x, y) -> (f x, f y)) pairs
 
 addPairs :: (Float, Float) -> (Float, Float) -> (Float, Float)
-addPairs (a, b) (c, d) = (a + c, b + d) 
+addPairs (a, b) (c, d) = (a + c, b + d)
 
 sumListPairs :: Foldable t => t (Float, Float) -> (Float, Float)
 sumListPairs pairs = foldr addPairs (0, 0) pairs

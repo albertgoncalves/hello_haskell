@@ -1,4 +1,3 @@
-{-# OPTIONS_GHC -dcore-lint #-}
 {-# OPTIONS_GHC -Wall #-}
 
 dot :: Num a => [a] -> [a] -> a
