@@ -9,7 +9,7 @@ listStr = map words
 transformList :: [Int] -> [Int]
 transformList (a:b:c) = (map (*2) [a, b]) ++ c ++ [1]
 transformList [_]     = []
-transformList [ ]     = []
+transformList []      = []
 
 listInt :: [[String]] -> [[Int]]
 listInt = map $ transformList . listStrToInt

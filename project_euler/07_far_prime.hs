@@ -8,4 +8,4 @@ primes = 2 : filter (isPrime primes) [3..]
 
 main :: IO ()
 main = do
-    print $ primes !! 10000
+    print $ primes !! 10000 -- ugh, !! is an ugly move...

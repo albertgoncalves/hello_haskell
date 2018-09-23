@@ -5,7 +5,7 @@
 import Data.List (group)
 
 primes :: [Integer]
-primes = 2 : filter (null . tail . primeFactors) [3,5..]
+primes = 2 : filter (null . tail . primeFactors) [3, 5..]
 
 primeFactors :: Integer -> [Integer]
 primeFactors n' = factor n' primes

@@ -13,4 +13,5 @@ main = do
     --                          , checkRem m [1..20]
     --                          ]
     let range = [3..20] :: [Integer]
-    print $ foldr lcm 2 range -- wow.
+    print $ foldr lcm 2 range -- wow, this does what all the above way trying
+                              -- to do...

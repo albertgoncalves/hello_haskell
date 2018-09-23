@@ -4,6 +4,8 @@ import Data.Array
 import Data.List
 import Data.Ord (comparing)
 
+-- via https://wiki.haskell.org/Euler_problems/11_to_20
+
 syrs :: Integer -> Array Integer Integer
 syrs n = a
   where
