@@ -1,0 +1,8 @@
+* np.tanh   <- hyperbolic tangent element-wise
+* np.dot    <- dot product of two arrays
+* np.exp(x) <- e ^ x
+* np.log    <- natural log
+* np.square <- square each element in list
+  _.T       <- transpose array
+  np.argmax <- the indices of the maximum values along an axis
+  np.c_     <- translates slice objects to concatenation along the second axis
