@@ -4,3 +4,13 @@ haskell_for_c
 installers
 texts
 rename_hellos.md
+*.o
+*.hi
+14_collatz_memo
+14_collatz
+12_divisible_triangle
+10_sum_primes
+09_special_triple
+07_far_prime
+05_smallest_multiple
+04_palindrome_prod
