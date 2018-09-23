@@ -3,6 +3,9 @@
 import Data.List     (tails)
 import Control.Monad (zipWithM_)
 
+-- can't remember where this was pilfered from...
+-- wish I could say it was my own handiwork
+
 fiblike :: [Integer] -> [Integer]
 fiblike st = xs
   where

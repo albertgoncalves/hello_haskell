@@ -1,5 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
+-- via https://github.com/octonion/examples/blob/master/gradient_descent/haskell/gradient_descent.hs
+
 import qualified Data.List
 
 hypothesis :: Num a => (a, a) -> a -> a

@@ -8,11 +8,11 @@ rangeList = 250000
 v1_ = 10
 v2_ = 20
 
-# Too slow, large memory cost.
-# v1 = np.asarray(range(v1_, v1_ + rangeList + 1))
-# v2 = np.asarray(range(v2_, v2_ + rangeList + 1))
+# too slow, large memory cost
+    # v1 = np.asarray(range(v1_, v1_ + rangeList + 1))
+    # v2 = np.asarray(range(v2_, v2_ + rangeList + 1))
 
-# Pretty fast, low memory overhead.
+# pretty fast, low memory overhead
 v1 = np.arange(v1_, v1_ + rangeList + 1)
 v2 = np.arange(v2_, v2_ + rangeList + 1)
 

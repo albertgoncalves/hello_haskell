@@ -10,5 +10,4 @@ main = do
     SD.getUserDocumentsDirectory >>= print
 
     DT.getCurrentTime            >>= print
-    -- this is the same as:
-    print =<< DT.getCurrentTime
+    print =<< DT.getCurrentTime -- same as above
