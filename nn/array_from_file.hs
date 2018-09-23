@@ -53,4 +53,4 @@ main = do
     -- withFile filename ReadMode $ \handle -> do
     --     contents <- hGetContents handle
     --     print $ routine contents
-    interact $ routine
+    interact routine
