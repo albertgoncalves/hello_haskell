@@ -22,9 +22,6 @@ applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
 applyMaybe Nothing _   = Nothing
 applyMaybe (Just x) ff = ff x
 
-maxInt :: Int -> Int -> Int
-maxInt = max
-
 main :: IO ()
 main = do
     print $ fmap f $ Just 3
@@ -32,5 +29,4 @@ main = do
     print $ liftA2 f' (Just 3) (Just 3)
     print $ f' <$> (Just 3) <*> (Just 3)
     print $ maybeHead $ f' <$> [3] <*> [3]
-    print $ maxInt <$> Just 3 <*> Just 9
     print $ applyMaybe (Just 3) f'' -- i.e. Just 3 >>= f''
