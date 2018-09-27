@@ -55,5 +55,6 @@ canReachIn3 start end = end `elem` in3 start
 
 demo2 :: IO ()
 demo2 = do
-    let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
+    -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
+    let allPaths = return [(6, 2)] >>= moveHistory >>= moveHistory >>= moveHistory
     print $ [path | path <- allPaths, head path == (6, 1)]
