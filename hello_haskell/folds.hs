@@ -14,4 +14,5 @@ main = do
                 , foldr (++) "!" . reverse
                 ]
 
+    print x
     print $ apply folds x
