@@ -19,7 +19,7 @@ maybeHead (x:_) = Just x
 
 -- the Maybe instance of >>=
 applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
-applyMaybe Nothing _   = Nothing
+applyMaybe Nothing  _  = Nothing
 applyMaybe (Just x) ff = ff x
 
 main :: IO ()
