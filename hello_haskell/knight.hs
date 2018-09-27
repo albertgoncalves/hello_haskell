@@ -12,23 +12,24 @@ instance MonadPlus [] where
     mplus = (++)
 
 guard :: (MonadPlus m) => Bool -> m ()
-guard True = return ()
+guard True  = return ()
 guard False = mzero
 
 type KnightPos = (Int, Int)
 
 moveKnight :: KnightPos -> [KnightPos]
-moveKnight (c, r) = filter onBoard [ (c + 2, r - 1)
-                                   , (c + 2, r + 1)
-                                   , (c - 2, r - 1)
-                                   , (c - 2, r + 1)
-                                   , (c + 1, r - 2)
-                                   , (c + 1, r + 2)
-                                   , (c - 1, r - 2)
-                                   , (c - 1, r + 2)
-                                   ]
+moveKnight (c, r) = filter onBoard moves
   where
     onBoard (c', r') = c' `elem` [1..8] && r' `elem` [1..8]
+    moves = [ (c + 2, r - 1)
+            , (c + 2, r + 1)
+            , (c - 2, r - 1)
+            , (c - 2, r + 1)
+            , (c + 1, r - 2)
+            , (c + 1, r + 2)
+            , (c - 1, r - 2)
+            , (c - 1, r + 2)
+            ]
 
 moveHistory :: [KnightPos] -> [[KnightPos]]
 moveHistory []          = []
