@@ -53,8 +53,12 @@ in3Do start = do
 canReachIn3 :: KnightPos -> KnightPos -> Bool
 canReachIn3 start end = end `elem` in3 start
 
+safeHead :: [a] -> [a]
+safeHead []    = []
+safeHead (x:_) = [x]
+
 demo2 :: IO ()
 demo2 = do
     -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
     let allPaths = return [(6, 2)] >>= moveHistory >>= moveHistory >>= moveHistory
-    print $ [path | path <- allPaths, head path == (6, 1)]
+    print $ [path | path <- allPaths, safeHead path == [(6, 1)]]
