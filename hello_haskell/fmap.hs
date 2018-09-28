@@ -5,6 +5,9 @@ sumMaybe = fmap sum . sequence
 
 main :: IO ()
 main = do
+    let f = (* 5)
+    let g = (+ 3)
+    print $ (fmap f g) (8 :: Int)
     let myInt = 1 :: Int
     print $ sumMaybe [Just myInt, Nothing   ]
     print $ sumMaybe [Just myInt, Just myInt]
