@@ -55,7 +55,7 @@ demo2 = do
     print $ moveHistory [(1, 1)]
     print $ [a:b | a:b <- moveHistory [(5, 5)], a == (3, 4)]
 
-in3 :: KnightPos -> [KnightPos] -- list all possible destinations afte 3 moves
+in3 :: KnightPos -> [KnightPos] -- list all possible destinations after 3 moves
 in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
 
 in3Do :: KnightPos -> [KnightPos]
