@@ -63,4 +63,4 @@ demo2 = do
     -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
     let allPaths = return [(6, 2)]
                    >>= moveHistory >>= moveHistory >>= moveHistory
-    print $ [path | path <- allPaths, safeHead path == [(6, 1)]]
+    print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
