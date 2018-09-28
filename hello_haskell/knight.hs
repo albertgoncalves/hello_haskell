@@ -15,6 +15,19 @@ guard :: (MonadPlus m) => Bool -> m ()
 guard True  = return ()
 guard False = mzero
 
+sevensOnly :: [Int]
+sevensOnly = do
+    x <- [1..50]
+    guard ('7' `elem` show x)
+    return x
+
+demo1 :: IO ()
+demo1 = do
+    print $ (guard ((5 :: Int) > (2 :: Int)) >> return "cool" :: [String])
+    print $ ([1..50] :: [Int]) -- similar to a list comprehension
+            >>= (\x -> guard ('7' `elem` show x) >> return x)
+    print $ sevensOnly
+
 type KnightPos = (Int, Int)
 
 moveKnight :: KnightPos -> [KnightPos]
@@ -35,8 +48,8 @@ moveHistory :: [KnightPos] -> [[KnightPos]]
 moveHistory []          = []
 moveHistory (from:hist) = [[to] ++ [from] ++ hist | to <- moveKnight from]
 
-demo1 :: IO ()
-demo1 = do
+demo2 :: IO ()
+demo2 = do
     print $ moveKnight   (1, 1)
     print $ moveKnight   (5, 5)
     print $ moveHistory [(1, 1)]
@@ -58,8 +71,8 @@ safeHead :: [a] -> [a]
 safeHead []    = []
 safeHead (x:_) = [x]
 
-demo2 :: IO ()
-demo2 = do
+demo3 :: IO ()
+demo3 = do
     -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
     let allPaths = return [(6, 2)]
                    >>= moveHistory >>= moveHistory >>= moveHistory
