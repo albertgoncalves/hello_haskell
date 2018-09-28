@@ -5,13 +5,18 @@ moves (l, r) = combos
   where
     xy     = [1,  2]
     ij     = [1, -1]
-    combos = [(l + (x * i), r + (y * j)) | x <-         xy
-                                         , y <- reverse xy
-                                         , i <-         ij
-                                         , j <- reverse ij
-                                         , x /= y
-                                         ]
+    combos = [(ll, rr) | x <-         xy
+                       , y <- reverse xy
+                       , i <-         ij
+                       , j <- reverse ij
+                       , x /= y
+                       , let ll = (l + (x * i))
+                       , let rr = (r + (y * j))
+                       , let board = [1..8]
+                       , elem ll board
+                       , elem rr board
+                       ]
 
 main :: IO ()
 main = do
-    print $ moves (5, 5)
+    print $ moves (7, 7)
