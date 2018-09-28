@@ -1,5 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
+import qualified Control.Monad as CM
+
 -- let's say a knight starts at (6, 2), can he get to (6, 1) in exactly three
 -- moves?
 
@@ -76,4 +78,17 @@ demo3 = do
     -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
     let allPaths = return [(6, 2)]
                    >>= moveHistory >>= moveHistory >>= moveHistory
+    print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
+
+-- (.)   ::            (b -> c)   -> (a -> b)   -> a -> c
+-- (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
+-- (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
+
+canReachInX :: Int -> [KnightPos] -> [[KnightPos]]
+canReachInX x start = return start
+                      >>= foldr (CM.<=<) return (replicate x moveHistory)
+
+main :: IO ()
+main = do
+    let allPaths = canReachInX 3 [(6, 2)] -- dynamic version of canReachIn3
     print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
