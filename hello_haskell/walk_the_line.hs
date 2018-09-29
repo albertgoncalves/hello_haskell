@@ -80,9 +80,9 @@ disaster :: Maybe Pole
 disaster = do
     start  <- return (0, 0)
     first  <- landL 2 start
-    _      <- Nothing -- warning: [-Wunused-do-bind]
-    second <- landR 2 first
-    landL 1 second
+    _      <- Nothing       -- this interrupts the chain
+    second <- landR 2 first -- still Nothing, despite calling 'first'
+    landL 1 second          -- see (>>) above
 
 main :: IO ()
 main = do
