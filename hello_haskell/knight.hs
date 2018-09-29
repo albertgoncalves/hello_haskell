@@ -84,11 +84,11 @@ demo3 = do
 -- (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
 -- (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
 
-canReachInX :: Int -> [KnightPos] -> [[KnightPos]]
-canReachInX x start = return start
+canReachIn :: Int -> [KnightPos] -> [[KnightPos]]
+canReachIn x start = return start
                       >>= foldr (CM.<=<) return (replicate x moveHistory)
 
 main :: IO ()
 main = do
-    let allPaths = canReachInX 3 [(6, 2)] -- dynamic version of canReachIn3
+    let allPaths = canReachIn 3 [(6, 2)] -- dynamic version of canReachIn3
     print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
