@@ -35,8 +35,9 @@ demo3 = do
     print $ Nothing        >>= landL 2
     print $ landR 1 (0, 0) >>= landL 2
     print $ return  (0, 0) >>= landR 2 >>= landL 2 >>= landR 2
-    print $ return  (0, 0) -- this will trigger 'Nothing'
-            >>= landL 1 >>= landR 4 >>= landL (-1) >>= landR (-2)
+    print $
+        return (0, 0) >>= landL 1 >>= landR 4 >>= landL (-1) >>= landR (-2)
+                                              -- this will trigger Nothing
 
 banana :: Pole -> Maybe Pole
 banana _ = Nothing
