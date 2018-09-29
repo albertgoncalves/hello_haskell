@@ -18,8 +18,8 @@ demo1 = do
 makeBranch :: Ord a => a -> Tree a -> Tree a
 makeBranch x Leaf           = Node 0 Leaf x Leaf
 makeBranch x (Node _ l y r)
-    | l > r                 = Node (treeLevel newR + 1) l    y newR
-    | otherwise             = Node (treeLevel newL + 1) newL y r
+    | l < r                 = Node (treeLevel newL + 1) newL y r
+    | otherwise             = Node (treeLevel newR + 1) l    y newR
   where
     newL = makeBranch x l
     newR = makeBranch x r
