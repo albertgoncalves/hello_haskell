@@ -19,7 +19,7 @@ demo1 :: IO ()
 demo1 = do
     print $ isBigGang 10
     print $ isBigGang 8
-    print $ applyLog (3,  "Smallish gang.")      isBigGang
+    print $ applyLog (3 , "Smallish gang."     ) isBigGang
     print $ applyLog (30, "A freaking platoon.") isBigGang
     print $ applyLog ("Tobin", "Got outlaw name.") (\x -> ( length x
                                                           , "Applied length."
@@ -37,14 +37,14 @@ demo2 = do
     print $ applyLog' (30, "A freaking platoon.") isBigGang
 
 addDrink :: Food -> (Food, Price)
-addDrink "beans" = ("milk",    Sum 25)
+addDrink "beans" = ("milk"   , Sum 25)
 addDrink "jerky" = ("whiskey", Sum 99)
-addDrink _       = ("beer",    Sum 30)
+addDrink _       = ("beer"   , Sum 30)
 
 demo3 :: IO ()
 demo3 = do
-    print $ applyLog' ("beans",  Sum (10 :: Int)) addDrink
-    print $ applyLog' ("jerky",  Sum (25 :: Int)) addDrink
+    print $ applyLog' ("beans", Sum (10 :: Int)) addDrink
+    print $ applyLog' ("jerky", Sum (25 :: Int)) addDrink
     print $ ("dogmeat", Sum (5 :: Int)) `applyLog'` addDrink
                                         `applyLog'` addDrink
 
@@ -93,3 +93,4 @@ main :: IO ()
 main = do
     print $ fst $ runWriter (gcd'' 8 3)
     mapM_ putStrLn $ snd $ runWriter (gcd'' 8 3)
+    mapM_ putStrLn ["Hello,", " world!"] -- hmm, checkout 'mapM_'...

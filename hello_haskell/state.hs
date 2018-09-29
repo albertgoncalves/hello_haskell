@@ -26,14 +26,14 @@ push a xs = ((), a:xs)
 stackManip :: Stack -> (Int, Stack)
 stackManip stack = let
     ((), newStack1) = push 3 stack
-    (_,  newStack2) = pop newStack1
+    (_ , newStack2) = pop newStack1
     in pop newStack2
 
 stackManip' :: Stack -> (Int, Stack)
 stackManip' stack = pop newStack2
   where
     ((), newStack1) = push 3 stack
-    (_,  newStack2) = pop newStack1
+    (_ , newStack2) = pop newStack1
 
 demo1 :: IO ()
 demo1 = do
