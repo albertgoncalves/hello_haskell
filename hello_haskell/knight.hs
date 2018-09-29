@@ -85,8 +85,9 @@ demo3 = do
 -- (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
 
 canReachIn :: Int -> [KnightPos] -> [[KnightPos]]
-canReachIn x start = return start
-                      >>= foldr (CM.<=<) return (replicate x moveHistory)
+canReachIn x start = return start >>= foldr (CM.<=<) return possibleMoves
+  where
+    possibleMoves = replicate x moveHistory
 
 main :: IO ()
 main = do
