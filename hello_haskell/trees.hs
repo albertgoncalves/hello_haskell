@@ -8,24 +8,34 @@ treeLevel :: Tree a -> Int
 treeLevel Leaf           = 0
 treeLevel (Node n _ _ _) = n
 
-demo :: IO ()
-demo = do
+demo1 :: IO ()
+demo1 = do
     let treeA = (Node 1 Leaf "A" Leaf) :: Tree String
     let treeB = (Node 2 Leaf "B" Leaf) :: Tree String
     print $ treeB > treeA
     print $ treeLevel treeA
 
+makeBranch :: Ord a => a -> Tree a -> Tree a
+makeBranch x Leaf           = Node 0 Leaf x Leaf
+makeBranch x (Node _ l y r)
+    | l > r                 = Node (treeLevel newR + 1) l    y newR
+    | otherwise             = Node (treeLevel newL + 1) newL y r
+  where
+    newL = makeBranch x l
+    newR = makeBranch x r
+
+demo2 :: IO ()
+demo2 = do
+    print $ makeBranch "A" $ makeBranch "B" Leaf
+    print $ makeBranch "A" $ makeBranch "B" $ makeBranch "C" Leaf
+    print $
+        makeBranch "A" $ makeBranch "B" $ makeBranch "C" $ makeBranch "D" Leaf
+
 -- foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
 foldTree :: Ord a => [a] -> Tree a
 foldTree xs = foldr makeBranch Leaf xs
-  where
-    makeBranch x Leaf           = Node 0 Leaf x Leaf
-    makeBranch x (Node _ l y r)
-        | l > r                 = Node (treeLevel newR + 1) l    y newR
-        | otherwise             = Node (treeLevel newL + 1) newL y r
-      where
-        newL = makeBranch x l
-        newR = makeBranch x r
 
 main :: IO ()
-main = print $ foldTree "ABCDEFGHIJKL"
+main = do
+    print $ foldTree "ABCD"
+    print $ foldTree "ABCDEFGHIJKL"
