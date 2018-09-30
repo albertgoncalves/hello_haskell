@@ -40,10 +40,10 @@ valid Mul x y = x <= y       && x > 1 && y > 1
 valid Div x y = mod x y == 0 && x > 1 && y > 1
 
 subsets :: [a] -> [[a]]
-subsets xx = concatMap permutations $ subsets' xx
+subsets x = concatMap permutations $ subsets' x
   where
     subsets' []     = [[]]
-    subsets' (x:xs) = subsets' xs ++ map (x:) (subsets' xs)
+    subsets' (y:ys) = subsets' ys ++ map (y:) (subsets' ys)
 
 split :: [a] -> [([a], [a])]
 split ns = map (flip splitAt ns) [1..(length ns) - 1]
@@ -59,14 +59,14 @@ results ns = [res | (ls, rs) <- split ns
 
 combine :: Result -> Result -> [Result]
 combine (l, x) (r, y) = [(App o l r, apply o x y) | o <- [Add, Sub, Mul, Div]
-                                                   , valid o x y
-                                                   ]
+                                                  , valid o x y
+                                                  ]
 
 solutions :: [Int] -> Int -> [Expr]
 solutions ns n = [e | ns'    <- subsets ns
-                     , (e, m) <- results ns'
-                     , m == n
-                     ]
+                    , (e, m) <- results ns'
+                    , m == n
+                    ]
 
 main :: IO ()
 main = do
