@@ -13,7 +13,7 @@ instance MonadPlus [] where
     mzero = []
     mplus = (++)
 
-guard :: (MonadPlus m) => Bool -> m ()
+guard :: MonadPlus m => Bool -> m ()
 guard True  = return ()
 guard False = mzero
 

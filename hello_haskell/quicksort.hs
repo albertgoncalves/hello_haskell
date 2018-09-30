@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-quicksort :: (Ord a) => [a] -> [a]
+quicksort :: Ord a => [a] -> [a]
 quicksort []     = []
 quicksort (x:xs) = quicksort smaller ++ [x] ++ quicksort larger
   where

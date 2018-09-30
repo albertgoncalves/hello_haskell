@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-loop :: (Integral b) => (a -> a) -> a -> b -> a
+loop :: Integral b => (a -> a) -> a -> b -> a
 loop f x n
     | n <= 0       = x
     | otherwise    = loop' f x n
