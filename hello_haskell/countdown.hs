@@ -2,6 +2,7 @@
 
 -- via https://www.youtube.com/watch?v=rlwSBNI9bXE
 
+import Control.Monad (filterM)
 import Data.List (permutations)
 
 data Op = Add
@@ -39,11 +40,11 @@ valid Sub x y = x >  y
 valid Mul x y = x <= y       && x > 1 && y > 1
 valid Div x y = mod x y == 0 && x > 1 && y > 1
 
-subsets :: [a] -> [[a]]
-subsets x = concatMap permutations $ subsets' x
-  where
-    subsets' []     = [[]]
-    subsets' (y:ys) = subsets' ys ++ map (y:) (subsets' ys)
+powerset :: [a] -> [[a]]
+powerset xs = filterM (\_ -> [True, False]) xs
+
+allPowersets :: [a] -> [[a]]
+allPowersets xs = concatMap permutations $ powerset xs
 
 split :: [a] -> [([a], [a])]
 split ns = map (flip splitAt ns) [1..(length ns) - 1]
@@ -63,7 +64,7 @@ combine (l, x) (r, y) = [(App o l r, apply o x y) | o <- [Add, Sub, Mul, Div]
                                                   ]
 
 solutions :: [Int] -> Int -> [Expr]
-solutions ns n = [e | ns'    <- subsets ns
+solutions ns n = [e | ns'    <- allPowersets ns
                     , (e, m) <- results ns'
                     , m == n
                     ]
