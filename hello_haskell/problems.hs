@@ -102,3 +102,16 @@ q9 = do
                  , 'e'
                  , 'e'
                  ]
+
+encode :: Eq a => [a] -> [(Int, a)]
+encode = encode' 1
+  where
+    encode' _ []           = []
+    encode' n (x:[])       = [(n, x)]
+    encode' n (x:ya@(y:_))
+        | x == y           = encode' (n + 1) ya
+        | otherwise        = [(n, x)] ++ encode' 1 ya
+
+q10 :: IO ()
+q10 = do
+    print $ encode "aaaabccaadeeee"
