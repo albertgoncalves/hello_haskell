@@ -70,11 +70,35 @@ q7 = do
     print $ flatten nestedList
 
 compress :: Eq a => [a] -> [a]
-compress (x:ys@(y:_))
-    | x == y    = compress ys
-    | otherwise = [x] ++ compress ys
+compress (x:ya@(y:_))
+    | x == y    = compress ya
+    | otherwise = [x] ++ compress ya
 compress x      = x
 
 q8 :: IO ()
 q8 = do
     print $ compress "aaaabccaadeeee"
+
+pack :: Eq a => [a] -> [[a]]
+pack []       = []
+pack xa@(x:_) = [a] ++ pack b
+  where
+    (a, b) = span (== x) xa
+
+q9 :: IO ()
+q9 = do
+    print $ pack [ 'a'
+                 , 'a'
+                 , 'a'
+                 , 'a'
+                 , 'b'
+                 , 'c'
+                 , 'c'
+                 , 'a'
+                 , 'a'
+                 , 'd'
+                 , 'e'
+                 , 'e'
+                 , 'e'
+                 , 'e'
+                 ]
