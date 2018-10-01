@@ -87,21 +87,7 @@ pack xa@(x:_) = [a] ++ pack b
 
 q9 :: IO ()
 q9 = do
-    print $ pack [ 'a'
-                 , 'a'
-                 , 'a'
-                 , 'a'
-                 , 'b'
-                 , 'c'
-                 , 'c'
-                 , 'a'
-                 , 'a'
-                 , 'd'
-                 , 'e'
-                 , 'e'
-                 , 'e'
-                 , 'e'
-                 ]
+    print $ pack ['a', 'a', 'a', 'a', 'b', 'c', 'c', 'a', 'a', 'd', 'e', 'e']
 
 encode :: Eq a => [a] -> [(Int, a)]
 encode = encode' 1
