@@ -40,3 +40,19 @@ demo3 :: IO ()
 demo3 = do
     print $ readP_to_S airport  "BIRK 281500Z 09014KT CAVOK M03/M06 Q0980"
     print $ readP_to_S airport' "BIRK 281500Z 09014KT CAVOK M03/M06 Q0980"
+
+digit :: ReadP Char
+digit = satisfy (\char' -> char' >= '0' && char' <= '9')
+
+timestamp :: ReadP (Int, Int, Int)
+timestamp = do
+    day    <- count 2 digit
+    hour   <- count 2 digit
+    minute <- count 2 digit
+    _      <- string "Z "
+    return (read day, read hour, read minute)
+
+demo4 :: IO ()
+demo4 = do
+    print $ readP_to_S timestamp "302359Z "
+    print $ readP_to_S timestamp "888990Z " -- doesn't parse correctly just yet
