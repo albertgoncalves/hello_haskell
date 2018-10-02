@@ -146,11 +146,11 @@ q14 = do
     print $ dupli ([1..5] :: [Int])
 
 repli :: [a] -> Int -> [a]
-repli []     _  = []
+repli []     _   = []
 repli (x:xs) n
-    | n <= 0    = []
-    | n >= 1    = (repli' x n) ++ repli xs n
-    | otherwise = [x]          ++ repli xs n
+    | n <= 0     = []
+    | n >= 1     = (repli' x n) ++ repli xs n
+    | otherwise  = [x]          ++ repli xs n
   where
     repli' x' 1  = [x']
     repli' x' n' = [x'] ++ repli' x (n' - 1)
@@ -167,3 +167,55 @@ dropNth xs n = [x | (x, i) <- zip xs ([1..] :: [Int])
 q16 :: IO ()
 q16 = do
     print $ dropNth "abcdefghik" 3
+
+split :: [a] -> Int -> ([a], [a])
+split xa n                     = split' ([], xa) n
+  where
+    split' (xa', []       ) _  = (xa', [])
+    split' (xa', ya@(y:ys)) n'
+        | n' > 0               = split' (xa' ++ [y], ys) (n' - 1)
+        | otherwise            = (xa', ya)
+
+q17 :: IO ()
+q17 = do
+    print $ split "abcdefghik" 3
+
+slice :: [a] -> Int -> Int -> [a]
+slice xa i j = slice' xa i j 1
+  where
+    slice' []     _  _  _ = []
+    slice' (x:xs) i' j' n
+        | i' >  n         = slice' xs i' j' (n + 1)
+        | n  >= j'        = [x]
+        | otherwise       = [x] ++ slice' xs i' j' (n + 1)
+
+q18 :: IO ()
+q18 = do
+    print $ slice ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'k'] 3 7
+
+rotate :: [a] -> Int -> [a]
+rotate [] _        = []
+rotate xa 0        = xa
+rotate xa@(x:xs) n
+    | n > 0        = rotate (xs ++ [x]) (n - 1)
+    | n < 0        = rotate xa $ (length xa) + n
+    | otherwise    = xa
+
+q19 :: IO ()
+q19 = do
+    print $ rotate ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h']   3
+    print $ rotate ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h'] (-2)
+
+removeAt :: [a] -> Int -> Maybe (a, [a])
+removeAt xa n = removeAt' [] xa n
+  where
+    removeAt' _  []     _  = Nothing
+    removeAt' ya (x:xs) n'
+        | n' <= 0          = Nothing
+        | n' == 1          = Just (x, ya ++ xs)
+        | otherwise        = removeAt' (ya ++ [x]) xs (n' - 1)
+
+q20 :: IO ()
+q20 = do
+    print $ removeAt "abcd" 2
+    print $ removeAt "abcd" 5
