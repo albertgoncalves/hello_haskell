@@ -101,3 +101,60 @@ encode = encode' 1
 q10 :: IO ()
 q10 = do
     print $ encode "aaaabccaadeeee"
+
+data ListItem a = Single a | Multiple Int a
+    deriving (Show)
+
+encodeMod :: Eq a => [a] -> [Maybe (ListItem a)]
+encodeMod = encodeMod' 1
+  where
+    encodeMod' _ []           = [Nothing]
+    encodeMod' n (x:[])       = [Just (Multiple n x)]
+    encodeMod' n (x:ya@(y:_))
+        | x == y              = encodeMod' (n + 1) ya
+        | n == 1 && x /= y    = [Just (Single     x)] ++ encodeMod' 1 ya
+        | otherwise           = [Just (Multiple n x)] ++ encodeMod' 1 ya
+
+q11 :: IO ()
+q11 = do
+    print $ encodeMod "aaaabccaadeeee"
+
+decodeMod :: [ListItem a] -> [a]
+decodeMod = concatMap decodeMod'
+  where
+    decodeMod' (Single     x) = [x]
+    decodeMod' (Multiple n x)
+        | n > 1               = [x] ++ decodeMod' (Multiple (n - 1) x)
+        | otherwise           = [x]
+
+q12 :: IO ()
+q12 = do
+    print $ decodeMod [ Multiple 4 'a'
+                      , Single 'b'
+                      , Multiple 2 'c'
+                      , Multiple 2 'a'
+                      , Single 'd'
+                      , Multiple 4 'e'
+                      ]
+
+dupli :: [a] -> [a]
+dupli []     = []
+dupli (x:xs) = [x, x] ++ dupli xs
+
+q14 :: IO ()
+q14 = do
+    print $ dupli ([1..5] :: [Int])
+
+repli :: [a] -> Int -> [a]
+repli []     _  = []
+repli (x:xs) n
+    | n <= 0    = []
+    | n >= 1    = (repli' x n) ++ repli xs n
+    | otherwise = [x]          ++ repli xs n
+  where
+    repli' x' 1  = [x']
+    repli' x' n' = [x'] ++ repli' x (n' - 1)
+
+q15 :: IO ()
+q15 = do
+    print $ repli "abc" 3

@@ -21,9 +21,9 @@ instance Show Op where
 instance Show Expr where
    show (Val n)     = show n
    show (App o l r) = bracket l ++ show o ++ bracket r
-                      where
-                         bracket (Val n) = show n
-                         bracket e       = "(" ++ show e ++ ")"
+                        where
+                          bracket (Val n) = show n
+                          bracket e       = "(" ++ show e ++ ")"
 
 data Expr = Val Int
           | App Op Expr Expr
