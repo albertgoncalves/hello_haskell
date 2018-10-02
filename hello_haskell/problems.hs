@@ -158,3 +158,12 @@ repli (x:xs) n
 q15 :: IO ()
 q15 = do
     print $ repli "abc" 3
+
+dropNth :: [a] -> Int -> [a]
+dropNth xs n = [x | (x, i) <- zip xs ([1..] :: [Int])
+                  , (mod i n) /= 0
+                  ]
+
+q16 :: IO ()
+q16 = do
+    print $ dropNth "abcdefghik" 3

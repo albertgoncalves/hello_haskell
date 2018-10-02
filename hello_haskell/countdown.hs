@@ -76,4 +76,4 @@ main = do
     let solutions' = solutions inputs target
     putStrLn ""
     mapM_ (putStrLn . show) solutions'
-    putStrLn $ "\n" ++ (show . length $ solutions') ++ " solutions found."
+    putStrLn $ "\n" ++ (show . length $ solutions') ++ " solutions found.\n"
