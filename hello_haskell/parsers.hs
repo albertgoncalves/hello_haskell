@@ -56,3 +56,21 @@ demo4 :: IO ()
 demo4 = do
     print $ readP_to_S timestamp "302359Z "
     print $ readP_to_S timestamp "888990Z " -- doesn't parse correctly just yet
+
+manualString :: ReadP [Char]
+manualString = do
+    first   <- satisfy ('h' ==)
+    second  <- satisfy ('i' ==)
+    return [first, second]
+
+string' :: [Char] -> ReadP [Char]
+string' xs = sequenceA $ map (\x -> satisfy (x ==)) xs
+
+demo5 :: IO ()
+demo5 = do
+    print $ readP_to_S manualString "hi"
+    print $ readP_to_S (string' "hi") "hi"
+    print $ readP_to_S (string  "hi") "hi"
+    print $ readP_to_S manualString "hello"
+    print $ readP_to_S (string' "hello") "hi"
+    print $ readP_to_S (string  "hello") "hi"
