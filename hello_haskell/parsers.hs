@@ -1,5 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
+import Control.Applicative ((<|>))
 import Text.ParserCombinators.ReadP
 
 -- via https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners.html
@@ -74,3 +75,47 @@ demo5 = do
     print $ readP_to_S manualString "hello"
     print $ readP_to_S (string' "hello") "hi"
     print $ readP_to_S (string  "hello") "hi"
+
+numbers :: Int -> ReadP Int
+numbers digits = fmap read (count digits digit)
+
+timestamp' :: ReadP (Int, Int, Int)
+timestamp' = do
+    day    <- numbers 2
+    hour   <- numbers 2
+    minute <- numbers 2
+    _      <- string' "Z "
+    if day < 1 || day > 31 || hour > 23 || minute > 59 then
+        pfail
+    else
+        return (day, hour, minute)
+
+demo6 :: IO ()
+demo6 = do
+    print $ readP_to_S timestamp' "302359Z "
+    print $ readP_to_S timestamp' "888990Z " -- should be better now
+
+toMPS :: String -> Int -> Int
+toMPS unit speed
+    | unit == "KT"  = div speed 2
+    | unit == "MPS" = speed
+toMPS _    _        = undefined
+
+gustParser :: ReadP Int
+gustParser = do
+    _ <- satisfy ('G' ==)
+    numbers 2 <|> numbers 3
+
+windInfo :: ReadP (Int, Int, Maybe Int)
+windInfo = do
+    direction <- numbers 3
+    speed     <- numbers 2   <|> numbers 3
+    gusts     <- option Nothing (fmap Just gustParser)
+    unit      <- string' "KT" <|> string' "MPS"
+    _         <- string' " "
+    return (direction, toMPS unit speed, fmap (toMPS unit) gusts)
+
+demo7 :: IO ()
+demo7 = do
+    print $ readP_to_S windInfo "09014KT "
+    print $ readP_to_S windInfo "18027G31KT "
