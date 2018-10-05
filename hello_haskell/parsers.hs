@@ -95,25 +95,28 @@ demo6 = do
     print $ readP_to_S timestamp' "302359Z "
     print $ readP_to_S timestamp' "888990Z " -- should be better now
 
-toMPS :: String -> Int -> Int
-toMPS unit speed
-    | unit == "KT"  = div speed 2
-    | unit == "MPS" = speed
-toMPS _    _        = undefined
+toMPS :: String -> Int -> Maybe Int
+toMPS "MPS" speed = Just speed
+toMPS "KT"  speed = Just (div speed 2)
+toMPS _     _     = Nothing
+
+maybeToMPS :: String -> Maybe Int -> Maybe Int
+maybeToMPS _    Nothing      = Nothing
+maybeToMPS unit (Just speed) = toMPS unit speed
 
 gustParser :: ReadP Int
 gustParser = do
     _ <- satisfy ('G' ==)
     numbers 2 <|> numbers 3
 
-windInfo :: ReadP (Int, Int, Maybe Int)
+windInfo :: ReadP (Int, Maybe Int, Maybe Int)
 windInfo = do
     direction <- numbers 3
     speed     <- numbers 2   <|> numbers 3
     gusts     <- option Nothing (fmap Just gustParser)
     unit      <- string' "KT" <|> string' "MPS"
     _         <- string' " "
-    return (direction, toMPS unit speed, fmap (toMPS unit) gusts)
+    return (direction, toMPS unit speed, maybeToMPS unit gusts)
 
 demo7 :: IO ()
 demo7 = do
