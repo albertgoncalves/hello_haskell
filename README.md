@@ -16,7 +16,7 @@ With the Haskell Platform installed, any given script can be compiled and run wi
 $ ghc FILENAME.hs
 $ ./FILENAME
 ```
-Or interpretted at run-time with:
+Or interpreted at run-time with:
 ```bash
 $ runhaskell FILENAME.hs
 ```
