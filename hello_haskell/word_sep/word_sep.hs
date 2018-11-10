@@ -4,7 +4,7 @@ import Data.Char (isLetter, isSpace)
 import Data.List (groupBy)
 
 notDelim :: Char -> Char -> Bool
-notDelim a b = (isLetter a && isLetter b) || (a == b)
+notDelim a b = all isLetter [a, b] || (a == b)
 
 process :: String -> [String]
 process = filter (any $ not . isSpace) . groupBy notDelim
