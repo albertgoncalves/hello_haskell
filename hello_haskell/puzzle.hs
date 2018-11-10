@@ -31,5 +31,5 @@ main = do
                        , lw > n
                        ]
 
-    print $ ans1
-    print $ ans2
+    print ans1
+    print ans2

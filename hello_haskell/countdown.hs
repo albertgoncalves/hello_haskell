@@ -41,13 +41,13 @@ valid Mul x y = x <= y       && x > 1 && y > 1
 valid Div x y = mod x y == 0 && x > 1 && y > 1
 
 powerset :: [a] -> [[a]]
-powerset xs = filterM (\_ -> [True, False]) xs
+powerset = filterM (const [True, False])
 
 allPowersets :: [a] -> [[a]]
 allPowersets xs = concatMap permutations $ powerset xs
 
 split :: [a] -> [([a], [a])]
-split ns = map (flip splitAt ns) [1..(length ns) - 1]
+split ns = map (`splitAt` ns) [1..length ns - 1]
 
 results :: [Int] -> [Result]
 results [] = []
@@ -75,5 +75,5 @@ main = do
     let target = 765 :: Int
     let solutions' = solutions inputs target
     putStrLn ""
-    mapM_ (putStrLn . show) solutions'
+    mapM_ print solutions'
     putStrLn $ "\n" ++ (show . length $ solutions') ++ " solutions found.\n"

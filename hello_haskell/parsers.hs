@@ -1,6 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Control.Applicative ((<|>))
+import Data.Char           (isDigit, isAsciiUpper)
 import Text.ParserCombinators.ReadP
 
 -- via https://two-wrongs.com/parser-combinators-parsing-for-haskell-beginners.html
@@ -20,7 +21,7 @@ demo1 = do
     print $ readP_to_S vowel "another"
     print $ readP_to_S vowel "did you see"
 
-atLeastOneVowel :: ReadP [Char]
+atLeastOneVowel :: ReadP String
 atLeastOneVowel = many1 vowel
 
 demo2 :: IO ()
@@ -29,11 +30,11 @@ demo2 = do
     print $ readP_to_S atLeastOneVowel "zabc"
 
 airport :: ReadP String
-airport = many1 $ satisfy (\char' -> char' >= 'A' && char' <= 'Z')
+airport = many1 $ satisfy isAsciiUpper
 
 airport' :: ReadP String
 airport' = do
-    code <- many1 $ satisfy (\char' -> char' >= 'A' && char' <= 'Z')
+    code <- many1 $ satisfy isAsciiUpper
     _    <- satisfy (== ' ')
     return code
 
@@ -43,7 +44,7 @@ demo3 = do
     print $ readP_to_S airport' "BIRK 281500Z 09014KT CAVOK M03/M06 Q0980"
 
 digit :: ReadP Char
-digit = satisfy (\char' -> char' >= '0' && char' <= '9')
+digit = satisfy isDigit
 
 timestamp :: ReadP (Int, Int, Int)
 timestamp = do
@@ -58,14 +59,14 @@ demo4 = do
     print $ readP_to_S timestamp "302359Z "
     print $ readP_to_S timestamp "888990Z " -- doesn't parse correctly just yet
 
-manualString :: ReadP [Char]
+manualString :: ReadP String
 manualString = do
     first   <- satisfy ('h' ==)
     second  <- satisfy ('i' ==)
     return [first, second]
 
-string' :: [Char] -> ReadP [Char]
-string' xs = sequenceA $ map (\x -> satisfy (x ==)) xs
+string' :: String -> ReadP String
+string' = traverse (\x -> satisfy (x ==))
 
 demo5 :: IO ()
 demo5 = do

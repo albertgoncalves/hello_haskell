@@ -13,5 +13,5 @@ main = do
     let n = 20
     let fibComp' = take n fibComp
     let fibGen'  = fibGen 0 1 (n - 1)
-    print $ fibComp'
-    print $ fibGen'
+    print fibComp'
+    print fibGen'

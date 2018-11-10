@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -Wall #-}
 
-apply :: [(a -> b)] -> a -> [b]
+apply :: [a -> b] -> a -> [b]
 apply []     _ = []
-apply (f:fs) x = [f x] ++ apply fs x
+apply (f:fs) x = f x : apply fs x
 
 main :: IO ()
 main = do

@@ -6,5 +6,4 @@ fac x acc
     | otherwise = fac (x - 1) (x * acc)
 
 main :: IO ()
-main = do
-    print $ fac (20 :: Integer) (1 :: Integer)
+main = print $ fac (20 :: Integer) (1 :: Integer)

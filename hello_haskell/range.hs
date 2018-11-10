@@ -6,5 +6,4 @@ range x y
     | otherwise = x : range (x + 1) y
 
 main :: IO ()
-main = do
-    print $ range 1 4
+main = print $ range 1 4

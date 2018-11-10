@@ -12,4 +12,4 @@ main :: IO ()
 main = do
     let msg = Message "Alberto" "Hello, "
     print msg
-    print $ messageContent $ reflect messageSender $ fmap (++) $ msg
+    print $ messageContent $ reflect messageSender $ fmap (++) msg

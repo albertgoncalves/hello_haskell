@@ -24,9 +24,9 @@ applyMaybe (Just x) ff = ff x
 
 main :: IO ()
 main = do
-    print $ fmap f $ Just 3
+    print $ f <$> Just 3
     print $ (<*>) (Just f) (Just 3)
     print $ liftA2 f' (Just 3) (Just 3)
-    print $ f' <$> (Just 3) <*> (Just 3)
+    print $ f' <$> Just 3 <*> Just 3
     print $ maybeHead $ f' <$> [3] <*> [3]
     print $ applyMaybe (Just 3) f'' -- i.e. Just 3 >>= f''

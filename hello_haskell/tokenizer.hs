@@ -5,9 +5,9 @@ import Data.Semigroup
 type Indexed a = (Min Int, a)
 
 strToIndex :: String -> [Indexed Char]
-strToIndex a = zip [0..] a
+strToIndex = zip [0..]
 
-mkToken :: [Indexed Char] -> Indexed [Char]
+mkToken :: [Indexed Char] -> Indexed String
 mkToken = sequenceA
 
 main :: IO ()

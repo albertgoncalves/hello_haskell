@@ -11,7 +11,7 @@ main = do
     let rightTriangles = [(a, b, c) | c <- [1..10]
                                     , b <- [1.. c]
                                     , a <- [1.. b]
-                                    , (sqd a) + (sqd b) == (sqd c)
+                                    , sqd a + sqd b == sqd c
                                     , a + b + c         == 24
                                     ] :: [(Int, Int, Int)]
-    print $ rightTriangles
+    print rightTriangles

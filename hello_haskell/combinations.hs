@@ -8,4 +8,4 @@ main = do
                          , (iy, y) <- zip index xs
                          , ix < iy -- all unique combinations from list
                          ]
-    print $ combos
+    print combos

@@ -33,9 +33,9 @@ safeDiv n m = Just $ div n m
 -- that could arise en route to using our new function.
 evalB :: Expr -> Maybe Int
 evalB (Val n)   = Just n
-evalB (Div n m) = case (evalB n) of
+evalB (Div n m) = case evalB n of
                     Nothing -> Nothing
-                    Just x  -> case (evalB m) of
+                    Just x  -> case evalB m of
                       Nothing -> Nothing
                       Just y  -> safeDiv x y
 
@@ -52,8 +52,8 @@ evalB (Div n m) = case (evalB n) of
 -- '>>=' + lambda functions.
 evalC :: Expr -> Maybe Int
 evalC (Val n)   = return n -- syntactic sugar for 'Just n'
-evalC (Div n m) = (evalC n) >>= (\x ->
-                  (evalC m) >>= (\y -> safeDiv x y))
+evalC (Div n m) = evalC n >>= (\x ->
+                  evalC m >>= safeDiv x)
 
 -- The definition of (Div n m) here can be read exactly the same as the
 -- corresponding definition in evalB:
@@ -67,8 +67,8 @@ evalC (Div n m) = (evalC n) >>= (\x ->
 -- Syntactic sugar; this is the same as the evalC. This looks very clean!
 evalD :: Expr -> Maybe Int
 evalD (Val n)   = return n
-evalD (Div n m) = do x <- (evalD n)
-                     y <- (evalD m)
+evalD (Div n m) = do x <- evalD n
+                     y <- evalD m
                      safeDiv x y
 
 -- evalC and evalD are examples of the 'Maybe Monad', which defined by two
@@ -83,15 +83,15 @@ evalD (Div n m) = do x <- (evalD n)
 
 main :: IO ()
 main = do
-    let myJustInt   = ((Val 3), (Val 1))
-    let myNothing   = ((Val 3), (Val 0))
+    let myJustInt   = (Val 3, Val 1)
+    let myNothing   = (Val 3, Val 0)
     let myVals      = [myJustInt, myNothing] :: [(Expr, Expr)]
     let mySafeEvals = [evalB, evalC, evalD]  :: [Expr -> Maybe Int]
     let uncurryDiv  = uncurry Div
 
     print $ evalA $ uncurryDiv myJustInt
-    print $ "error" -- result of 'evalA $ uncurryDiv myNothing'
-    print $ [f $ uncurryDiv a | f <- mySafeEvals, a <- myVals]
+    print "error" -- result of 'evalA $ uncurryDiv myNothing'
+    print [f $ uncurryDiv a | f <- mySafeEvals, a <- myVals]
 
 -- A few points on Monads:
     -- This structure can be applied to other effects (not specific to Maybe),

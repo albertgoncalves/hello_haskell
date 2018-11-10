@@ -25,10 +25,10 @@ sevensOnly = do
 
 demo1 :: IO ()
 demo1 = do
-    print $ (guard ((5 :: Int) > (2 :: Int)) >> return "cool" :: [String])
+    print (guard ((5 :: Int) > (2 :: Int)) >> return "cool" :: [String])
     print $ ([1..50] :: [Int]) -- similar to a list comprehension
             >>= (\x -> guard ('7' `elem` show x) >> return x)
-    print $ sevensOnly
+    print sevensOnly
 
 type KnightPos = (Int, Int)
 
@@ -52,19 +52,18 @@ moveHistory (from:hist) = [[to] ++ [from] ++ hist | to <- moveKnight from]
 
 demo2 :: IO ()
 demo2 = do
-    print $ moveKnight   (1, 1)
-    print $ moveKnight   (5, 5)
+    print $ moveKnight (1, 1)
+    print $ moveKnight (5, 5)
     print $ moveHistory [(1, 1)]
-    print $ [a:b | a:b <- moveHistory [(5, 5)], a == (3, 4)]
+    print [a:b | a:b <- moveHistory [(5, 5)], a == (3, 4)]
 
 in3 :: KnightPos -> [KnightPos] -- list all possible destinations after 3 moves
-in3 start = return start >>= moveKnight >>= moveKnight >>= moveKnight
+in3 start = moveKnight start >>= moveKnight >>= moveKnight
 
 in3Do :: KnightPos -> [KnightPos]
 in3Do start = do
     first  <- moveKnight start
-    second <- moveKnight first
-    return second
+    moveKnight first
 
 canReachIn3 :: KnightPos -> KnightPos -> Bool
 canReachIn3 start end = end `elem` in3 start
@@ -77,19 +76,19 @@ demo3 :: IO ()
 demo3 = do
     -- let allPaths = moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
     let allPaths =
-            return [(6, 2)] >>= moveHistory >>= moveHistory >>= moveHistory
-    print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
+            moveHistory [(6, 2)] >>= moveHistory >>= moveHistory
+    print [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
 
 -- (.)   ::            (b -> c)   -> (a -> b)   -> a -> c
 -- (<=<) :: Monad m => (b -> m c) -> (a -> m b) -> a -> m c
 -- (>=>) :: Monad m => (a -> m b) -> (b -> m c) -> a -> m c
 
 canReachIn :: Int -> [KnightPos] -> [[KnightPos]]
-canReachIn x start = return start >>= foldr (CM.<=<) return possibleMoves
+canReachIn x = foldr (CM.<=<) return possibleMoves
   where
     possibleMoves = replicate x moveHistory
 
 main :: IO ()
 main = do
     let allPaths = canReachIn 3 [(6, 2)] -- dynamic version of canReachIn3
-    print $ [reverse path | path <- allPaths, safeHead path == [(6, 1)]]
+    print [reverse path | path <- allPaths, safeHead path == [(6, 1)]]

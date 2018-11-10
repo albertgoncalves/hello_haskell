@@ -16,7 +16,7 @@ main = do
     let b = array (0, 4) [(i, i+1) | i <- lst]
     putStrLn $ "dcl: " ++ show b
 
-    let c = array ((0,0), (1, 2)) [((i, j), (i + j)) | i <- [0..1]
+    let c = array ((0,0), (1, 2)) [((i, j), i + j) | i <- [0..1]
                                                      , j <- [0..2]
                                                      ] :: Array (Int, Int) Int
     putStrLn $ "2d : " ++ show c

@@ -6,9 +6,9 @@ import qualified Data.List as L
 import qualified Data.Text as T
 
 -- split on period and grab extension characters at index 1
-splitExt :: [Char] -> T.Text
+splitExt :: String -> T.Text
 splitExt x
-    | not (elem '.' x)      = " "
+    | '.' `notElem` x       = " "
     | Prelude.head x == '.' = " "
     | Prelude.last x == '.' = " "
     | otherwise             = T.splitOn (T.pack ".") (T.pack x) !! 1
@@ -28,7 +28,7 @@ main = do
     -- myFiles <- getDirectoryContents =<< getCurrentDirectory
     -- the above line is equivalent to the following 2 lines:
     currentDir <- getCurrentDirectory
-    myFiles    <- getDirectoryContents $ currentDir
+    myFiles    <- getDirectoryContents currentDir
 
     let myFilter = [readyString x | x <- myFiles, splitExt x == "hs"]
     let myLen    = Prelude.length myFilter

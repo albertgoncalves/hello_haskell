@@ -13,10 +13,9 @@ moves (l, r) = combos
                           , x /= y
                           , let ll = d  l x
                           , let rr = d' r y
-                          , elem ll board
-                          , elem rr board
+                          , ll `elem` board
+                          , rr `elem` board
                           ]
 
 main :: IO ()
-main = do
-    print $ moves (7, 7)
+main = print $ moves (7, 7)

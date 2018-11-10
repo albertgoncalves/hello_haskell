@@ -2,18 +2,6 @@
 
 import Control.Monad.State
 
--- newtype State s a = State { runState :: s -> (a, s) }
---
--- instance Monad (State s) where
---     return x = State $ \s -> (x, s)
---     (State h) >>= f = State $ \s -> let (a, newState) = h s
---                                         (State g)     = f a
---                                     in g newState
-
--- instance Monad ((->) r) where
---     return x = \_ -> x
---     h >>= f = \w -> f (h w) w
-
 type Stack = [Int]
 
 pop :: Stack -> (Int, Stack)
@@ -53,8 +41,7 @@ stackManip'' = do
     pop'
 
 demo2 :: IO ()
-demo2 = do
-    print $ runState stackManip''  [5, 8, 2, 1]
+demo2 = print $ runState stackManip'' [5, 8, 2, 1]
 
 stackStuff :: State Stack ()
 stackStuff = do

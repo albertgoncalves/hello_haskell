@@ -10,8 +10,8 @@ treeLevel (Node n _ _ _) = n
 
 demo1 :: IO ()
 demo1 = do
-    let treeA = (Node 1 Leaf "A" Leaf) :: Tree String
-    let treeB = (Node 2 Leaf "B" Leaf) :: Tree String
+    let treeA = Node 1 Leaf "A" Leaf :: Tree String
+    let treeB = Node 2 Leaf "B" Leaf :: Tree String
     print $ treeB > treeA
     print $ treeLevel treeA
 
@@ -33,7 +33,7 @@ demo2 = do
 
 -- foldr :: Foldable t => (a -> b -> b) -> b -> t a -> b
 foldTree :: Ord a => [a] -> Tree a
-foldTree xs = foldr makeBranch Leaf xs
+foldTree = foldr makeBranch Leaf
 
 main :: IO ()
 main = do
