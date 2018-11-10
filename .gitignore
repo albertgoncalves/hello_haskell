@@ -17,3 +17,5 @@ rename_hellos.md
 required_funs.txt
 compare_dot.sh
 *.html
+hegel*
+word_sep.sh
