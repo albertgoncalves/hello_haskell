@@ -30,11 +30,10 @@ randomList :: (Random a) => Int -> [a]
 randomList seed = randoms (mkStdGen seed)
 
 getBounds :: Int -> Int -> (Float, Float, Float)
-getBounds seed n = (
-    (sum randList) / fromIntegral n,
-    minimum randList,
-    maximum randList
-    )
+getBounds seed n = ( sum randList / fromIntegral n
+                   , minimum randList
+                   , maximum randList
+                   )
   where
     randList = take n (randomList seed :: [Float])
 

@@ -18,7 +18,7 @@ costFunc ts d = scaleFactor * sum squares
     squares     = map (squareDiff d) ts
 
 diff :: Num a => (a, a) -> (a, a) -> a
-diff d (x, y) = (hypothesis d x) - y
+diff d (x, y) = hypothesis d x - y
 
 descendTheta :: Fractional a =>
     ((a, a) -> a) -> ((a, a) -> a) -> [(a, a)] -> a -> (a, a) -> a
@@ -36,8 +36,8 @@ singleDescend ts lr deltas = (thetaZero, thetaOne)
     -- descendThetaOne  = descendTheta (fst)     snd
     -- thetaZero        = descendThetaZero ts lr deltas
     -- thetaOne         = descendThetaOne  ts lr deltas
-    thetaZero = descendTheta (\_ -> 1) fst ts lr deltas
-    thetaOne  = descendTheta (fst)     snd ts lr deltas
+    thetaZero = descendTheta (const 1) fst ts lr deltas
+    thetaOne  = descendTheta fst     snd ts lr deltas
 
 descend :: (Eq t1, Num t1) => (t2 -> t2) -> t2 -> t1 -> t2
 descend func deltas i
@@ -51,4 +51,4 @@ main = do
     let trainingSet  = [(1.0, 10.0), (2.0, 20.0), (3.0, 30.0), (4.0, 40.0)]
     let descentFunc  = singleDescend trainingSet learningRate
     let deltas       = descend descentFunc (100, 1) i
-    print $ deltas
+    print deltas

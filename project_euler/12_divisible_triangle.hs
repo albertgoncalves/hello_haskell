@@ -23,5 +23,4 @@ problem_12 = head $ filter ((> 500) . nDivisors) triangleNumbers
     triangleNumbers = scanl1 (+) [1..]
 
 main :: IO ()
-main = do
-    print $ problem_12
+main = print problem_12

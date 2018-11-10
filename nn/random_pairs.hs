@@ -10,8 +10,8 @@ getRandom (x, _) = x
 
 exampleRand :: IO ()
 exampleRand = do
-    print $ (getRandom $ randomNum 1 :: Int)
-    print $ (getRandom $ randomNum 1 :: Float)
+    print (getRandom $ randomNum 1 :: Int)
+    print (getRandom $ randomNum 1 :: Float)
 
 randomList :: Random a => Int -> [a]
 randomList seed = randoms (mkStdGen seed)
@@ -24,19 +24,19 @@ randomPairs seed n = take n $ zip randList' randList''
     randList'' = randomList newSeed
 
 mapPairs :: (t -> b) -> [(t, t)] -> [(b, b)]
-mapPairs f pairs = map (\(x, y) -> (f x, f y)) pairs
+mapPairs f = map (\(x, y) -> (f x, f y))
 
 addPairs :: (Float, Float) -> (Float, Float) -> (Float, Float)
 addPairs (a, b) (c, d) = (a + c, b + d)
 
 sumListPairs :: Foldable t => t (Float, Float) -> (Float, Float)
-sumListPairs pairs = foldr addPairs (0, 0) pairs
+sumListPairs = foldr addPairs (0, 0)
 
 main :: IO ()
 main = do
     let exPairs    = randomPairs 1 3
-    let mapExPairs = mapPairs (+ 100.0) $ exPairs
-    print $ exPairs
-    print $ sumListPairs $ exPairs
-    print $ mapExPairs
-    print $ sumListPairs $ mapExPairs
+    let mapExPairs = mapPairs (+ 100.0) exPairs
+    print exPairs
+    print $ sumListPairs exPairs
+    print mapExPairs
+    print $ sumListPairs mapExPairs

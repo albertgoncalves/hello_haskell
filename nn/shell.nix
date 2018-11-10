@@ -12,9 +12,9 @@ let
             isLibrary = false;
             isExecutable = true;
             executableHaskellDepends = [ base
-                                         haskellPackages.http-conduit
-                                         haskellPackages.HTTP
-                                         haskellPackages.tagsoup
+                                         haskellPackages.vector
+                                         haskellPackages.random
+                                         haskellPackages.tf-random
                                          haskellPackages.hlint
                                        ];
             license = stdenv.lib.licenses.gpl3;

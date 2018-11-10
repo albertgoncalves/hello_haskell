@@ -6,5 +6,4 @@ showInt :: Int -> String
 showInt = show
 
 main :: IO ()
-main = do
-    interact $ showInt . sum . map read . tail . words
+main = interact $ showInt . sum . map read . tail . words

@@ -30,9 +30,8 @@ solve :: String -> String
 solve ""       = "Input *is* nothing."
 solve rawInput = filterOutput solution
   where
-    numInput = map readInt $ words $ rawInput :: [Maybe Int]
-    solution = fmap apply $ sequence numInput ::  Maybe Int
+    numInput = map readInt $ words rawInput :: [Maybe Int]
+    solution = apply <$> sequence numInput ::  Maybe Int
 
 main :: IO ()
-main = do
-    interact solve
+main = interact solve

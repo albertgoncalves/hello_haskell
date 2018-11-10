@@ -7,7 +7,7 @@ listStr :: [String] -> [[String]]
 listStr = map words
 
 transformList :: [Int] -> [Int]
-transformList (a:b:c) = (map (*2) [a, b]) ++ c ++ [1]
+transformList (a:b:c) = map (*2) [a, b] ++ c ++ [1]
 transformList [_]     = []
 transformList []      = []
 
@@ -26,9 +26,9 @@ addComma :: Char -> Char
 addComma x = replaceChar x ' ' ','
 
 replaceBrackets :: String -> String
-replaceBrackets x = filter (not . flip elem "[]") x
+replaceBrackets = filter (not . flip elem "[]")
 
-cleanInput :: [Char] -> (String, [String])
+cleanInput :: String -> (String, [String])
 cleanInput x = (head lines', tail lines')
   where
     lines' = lines $ map replaceComma x
@@ -43,13 +43,13 @@ addHeader :: String -> String -> String
 addHeader header x = header ++ "\n" ++ x
 
 routine :: String -> String
-routine x = (addHeader header'') . prepareOutput . processInput $ input'
+routine x = addHeader header'' . prepareOutput . processInput $ input'
   where
     (header', input') = cleanInput x
     header''          = map addComma (header' ++ " y2")
 
 main :: IO ()
-main = do
+main =
     -- withFile filename ReadMode $ \handle -> do
     --     contents <- hGetContents handle
     --     print $ routine contents

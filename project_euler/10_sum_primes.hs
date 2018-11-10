@@ -7,5 +7,4 @@ primes :: [Integer]
 primes = 2 : filter (isPrime primes) [3..]
 
 main :: IO ()
-main = do
-    print $ sum $ takeWhile (2000000 >) $ primes
+main = print $ sum $ takeWhile (2000000 >) primes

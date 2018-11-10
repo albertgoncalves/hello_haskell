@@ -15,9 +15,8 @@ validateN (NumLoops n)
 
 loopFun :: (Constant -> Maybe LoopVal -> Maybe LoopVal) ->
            NumLoops -> LoopVal -> Constant -> Maybe LoopVal
-loopFun f n x c = do n' <- (validateN n)
-                     x' <- (foldr f (Just x) $ take n' $ repeat c)
-                     return x'
+loopFun f n x c = do n' <- validateN n
+                     foldr f (Just x) $ replicate n' c
 
 main :: IO ()
 main = do
