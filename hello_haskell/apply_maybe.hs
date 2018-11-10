@@ -1,7 +1,7 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Control.Applicative (liftA2)
-import Control.Monad       (foldM )
+import Control.Monad       (foldM)
 
 -- apply :: [a -> b] -> [a] -> [b]
 -- apply fs vals = fs <*> vals

@@ -2,9 +2,9 @@
 
 -- via http://hackage.haskell.org/package/http-conduit-2.3.2/docs/Network-HTTP-Conduit.html
 
-import Data.Conduit.Binary (sinkFile) -- Exported from the package conduit-extra
-import Network.HTTP.Conduit
-import Conduit (runConduit, (.|))
+import Data.Conduit.Binary          (sinkFile) -- Exported from the package
+import Network.HTTP.Conduit                    -- conduit-extra
+import Conduit                      (runConduit, (.|))
 import Control.Monad.Trans.Resource (runResourceT)
 
 main :: IO ()

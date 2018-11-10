@@ -2,7 +2,7 @@
 
 data Tree a = Leaf
             | Node Int (Tree a) a (Tree a)
-  deriving (Show, Eq, Ord)
+            deriving (Show, Eq, Ord)
 
 treeLevel :: Tree a -> Int
 treeLevel Leaf           = 0

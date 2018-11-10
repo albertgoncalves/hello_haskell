@@ -6,7 +6,7 @@
 -- division.
 data Expr = Val Int
           | Div Expr Expr
-  deriving (Show)
+          deriving (Show)
 
 -- But wait, this function can fail! (m == 0)
     -- How might be make our program 'safer'?

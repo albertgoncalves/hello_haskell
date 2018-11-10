@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Control.Concurrent (forkIO, threadDelay)
+import Control.Concurrent      (forkIO, threadDelay)
 import Control.Concurrent.MVar (newEmptyMVar, takeMVar, putMVar)
 
 sleepSeconds :: Int -> IO ()

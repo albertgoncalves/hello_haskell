@@ -1,6 +1,6 @@
-{-# OPTIONS_GHC -Wall                   #-}
+{-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
-{-# LANGUAGE DerivingStrategies         #-}
+{-# LANGUAGE DerivingStrategies #-}
 
 newtype NewInt = NewInt Int
     deriving (Eq, Ord, Show, Bounded)
