@@ -12,6 +12,9 @@ with pkgs; mkShell {
                     fzf
                   ];
     shellHook = ''
-        alias vimfzf='vim "$(fzf)"'
+        withfzf() { $1 "$(fzf)"; }
+        alias vimfzf="withfzf vim"
+        alias runfzf="withfzf runhaskell"
+        alias hlifzf="withfzf hlint -c=never"
     '';
 }
