@@ -3,6 +3,7 @@ cis194
 haskell_for_c
 installers
 texts
+*.txt
 rename_hellos.md
 *.o
 *.hi

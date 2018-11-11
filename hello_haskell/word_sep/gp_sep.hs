@@ -1,10 +1,10 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Data.Char (isLetter, isSpace)
+import Data.Char (isAlphaNum, isSpace)
 import Data.List (groupBy)
 
 notDelim :: Char -> Char -> Bool
-notDelim a b = all isLetter [a, b] || (a == b)
+notDelim a b = isAlphaNum a && isAlphaNum b || (a == b)
 
 process :: String -> [String]
 process = filter (any $ not . isSpace) . groupBy notDelim
