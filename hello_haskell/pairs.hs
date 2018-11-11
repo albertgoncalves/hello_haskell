@@ -19,3 +19,5 @@ main = do
     print $ map (*3) <$> pairWith pairList ints
     print $ map (*3) <$> pairWith (++) (map (:[]) ints)
     print $ ((*3) <$>) <$> pairWith (++) (map (:[]) ints)
+    print $ ((*) <$> [3, 3] <*>) <$> pairWith (++) (map (:[]) ints)
+    print $ ((*) <$> Just 3 <*>) <$> map Just (pairWith (curry fst) ints)
