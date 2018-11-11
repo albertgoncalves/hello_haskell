@@ -9,7 +9,9 @@ with pkgs; mkShell {
                         pkgs.hlint
                     ]))
                     libiconv
+                    fzf
                   ];
     shellHook = ''
+        alias vimfzf='vim "$(fzf)"'
     '';
 }
