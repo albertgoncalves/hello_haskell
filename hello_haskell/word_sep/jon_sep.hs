@@ -1,6 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
-import Data.Char (isPunctuation, isSpace, isControl, isAlphaNum)
+import Data.Char (isAlphaNum, isControl, isPunctuation, isSpace)
 
 process :: String -> [String]
 process [] = []
