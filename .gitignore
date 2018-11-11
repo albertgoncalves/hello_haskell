@@ -19,5 +19,5 @@ required_funs.txt
 compare_dot.sh
 *.html
 hegel*
-word_sep.sh
+sep.sh
 *.swo
