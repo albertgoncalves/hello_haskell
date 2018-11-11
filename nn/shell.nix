@@ -1,34 +1,15 @@
-{ nixpkgs ? import <nixpkgs> {}, compiler ? "ghc844" }:
+{ pkgs ? import <nixpkgs> {} }:
 
-let
-
-    inherit (nixpkgs) pkgs;
-
-    f = { mkDerivation, base, stdenv }:
-        mkDerivation {
-            pname = "haskell";
-            version = "0";
-            src = ./.;
-            isLibrary = false;
-            isExecutable = true;
-            executableHaskellDepends = [ base
-                                         haskellPackages.vector
-                                         haskellPackages.random
-                                         haskellPackages.tf-random
-                                         haskellPackages.hlint
-                                       ];
-            license = stdenv.lib.licenses.gpl3;
-        };
-
-    haskellPackages = if compiler == "default"
-                          then pkgs.haskellPackages
-                      else
-                          pkgs.haskell.packages.${compiler};
-
-    drv = haskellPackages.callPackage f {};
-
-in
-
-    if pkgs.lib.inNixShell
-        then drv.env
-    else drv
+with pkgs; mkShell {
+    name = "haskell";
+    buildInputs = [ (haskell.packages.ghc844.ghcWithPackages (pkgs: [
+                        pkgs.vector
+                        pkgs.random
+                        pkgs.tf-random
+                        pkgs.hlint
+                    ]))
+                    libiconv
+                  ];
+    shellHook = ''
+    '';
+}
