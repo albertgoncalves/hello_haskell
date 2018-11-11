@@ -3,10 +3,10 @@
 with pkgs; mkShell {
     name = "haskell";
     buildInputs = [ (haskell.packages.ghc844.ghcWithPackages (pkgs: [
-                        pkgs.http-conduit
-                        pkgs.HTTP
-                        pkgs.tagsoup
-                        pkgs.hlint
+                      pkgs.http-conduit
+                      pkgs.HTTP
+                      pkgs.tagsoup
+                      pkgs.hlint
                     ]))
                     fzf
                   ];
