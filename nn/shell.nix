@@ -14,6 +14,8 @@ with pkgs; mkShell {
                     haskellPackages.hlint
                   ];
     shellHook = ''
+        hlintnc() { hlint -c=never $1; }
+        strcd()   { cd "$(dirname $1)"; }
         withfzf() {
             local h
             h=$(fzf)
@@ -21,11 +23,12 @@ with pkgs; mkShell {
                 $1 "$h"
             fi
         }
-        hlintnc() { hlint -c=never $1; }
-        strcd() { cd "$(dirname $1)"; }
-        alias cdfzf="withfzf strcd"
-        alias vimfzf="withfzf vim"
-        alias runfzf="withfzf runhaskell"
+
+        alias  cdfzf="withfzf strcd"
         alias hlifzf="withfzf hlintnc"
+        alias runfzf="withfzf runhaskell"
+        alias vimfzf="withfzf vim"
+
+        export -f withfzf
     '';
 }
