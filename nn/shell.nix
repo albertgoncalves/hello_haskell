@@ -22,6 +22,8 @@ with pkgs; mkShell {
             fi
         }
         hlintnc() { hlint -c=never $1; }
+        strcd() { cd "$(dirname $1)"; }
+        alias cdfzf="withfzf strcd"
         alias vimfzf="withfzf vim"
         alias runfzf="withfzf runhaskell"
         alias hlifzf="withfzf hlintnc"
