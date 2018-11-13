@@ -14,7 +14,13 @@ with pkgs; mkShell {
                     haskellPackages.hlint
                   ];
     shellHook = ''
-        withfzf() { $1 "$(fzf)"; }
+        withfzf() {
+            local h
+            h=$(fzf)
+            if (( $? == 0 )); then
+                $1 "$h"
+            fi
+        }
         hlintnc() { hlint -c=never $1; }
         alias vimfzf="withfzf vim"
         alias runfzf="withfzf runhaskell"
