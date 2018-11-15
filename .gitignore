@@ -21,3 +21,4 @@ compare_dot.sh
 hegel*
 sep.sh
 *.swo
+!index.html
