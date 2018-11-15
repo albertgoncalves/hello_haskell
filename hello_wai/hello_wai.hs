@@ -28,12 +28,12 @@ app request respond = do
     respond $ route $ B8.unpack $ rawPathInfo request
   where
     indexes = ["/", "/index", "/index/"]
+    route "/file"             = file
     route path
-        | elem path indexes = index path
-        | path == "/file"   = file
-        | otherwise         = notFound
+        | path `elem` indexes = index path
+        | otherwise           = notFound
 
 main :: IO ()
 main = do
-    putStrLn $ "http://localhost:8080/"
+    putStrLn "http://localhost:8080/"
     run 8080 app
