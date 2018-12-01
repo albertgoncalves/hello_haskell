@@ -23,8 +23,9 @@ readInt :: String -> Maybe Int
 readInt = readMaybe
 
 filterOutput :: Maybe Int -> String
-filterOutput (Just x) = show x
-filterOutput Nothing  = "Non-numeric input found, that's not going to fly."
+filterOutput = maybe failString show
+  where
+    failString = "Non-numeric input found, that's not going to fly."
 
 solve :: String -> String
 solve ""       = "Input *is* nothing."
