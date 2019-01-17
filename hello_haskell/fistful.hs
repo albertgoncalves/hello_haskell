@@ -3,7 +3,6 @@
 import Control.Applicative
 
 -- via http://learnyouahaskell.com/a-fistful-of-monads
-
 f :: Int -> Int
 f = (* 3)
 
@@ -14,12 +13,12 @@ f'' :: Int -> Maybe Int
 f'' x = Just $ f x
 
 maybeHead :: [a] -> Maybe a
-maybeHead []    = Nothing
+maybeHead [] = Nothing
 maybeHead (x:_) = Just x
 
 -- the Maybe instance of >>=
 applyMaybe :: Maybe a -> (a -> Maybe b) -> Maybe b
-applyMaybe Nothing  _  = Nothing
+applyMaybe Nothing _ = Nothing
 applyMaybe (Just x) ff = ff x
 
 main :: IO ()

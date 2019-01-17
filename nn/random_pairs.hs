@@ -19,8 +19,8 @@ randomList seed = randoms (mkStdGen seed)
 randomPairs :: Int -> Int -> [(Float, Float)]
 randomPairs seed n = take n $ zip randList' randList''
   where
-    newSeed    = getRandom $ randomNum seed
-    randList'  = randomList seed
+    newSeed = getRandom $ randomNum seed
+    randList' = randomList seed
     randList'' = randomList newSeed
 
 mapPairs :: (t -> b) -> [(t, t)] -> [(b, b)]
@@ -34,7 +34,7 @@ sumListPairs = foldr addPairs (0, 0)
 
 main :: IO ()
 main = do
-    let exPairs    = randomPairs 1 3
+    let exPairs = randomPairs 1 3
     let mapExPairs = mapPairs (+ 100.0) exPairs
     print exPairs
     print $ sumListPairs exPairs

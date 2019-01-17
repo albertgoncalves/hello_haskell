@@ -1,7 +1,6 @@
 {-# OPTIONS_GHC -Wall #-}
 
 -- via http://hackage.haskell.org/package/tagsoup
-
 import Network.HTTP
 import Text.HTML.TagSoup
 

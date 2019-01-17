@@ -1,8 +1,8 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Data.Array.IArray (Array, accumArray, assocs)
-import System.Random     (mkStdGen, Random, randomR, random, randoms, StdGen)
-import System.Random.TF  (TFGen, seedTFGen)
+import System.Random (Random, StdGen, mkStdGen, random, randomR, randoms)
+import System.Random.TF (TFGen, seedTFGen)
 
 -- one way
 rollDice :: TFGen -> (Int, TFGen)
@@ -12,11 +12,14 @@ getFirst :: TFGen -> Int
 getFirst g = fst $ rollDice g
 
 histogram :: [Int] -> Array Int Int
-histogram l = accumArray (+) 0 (1, 6) $ do { x <- l; return (x, 1) }
+histogram l =
+    accumArray (+) 0 (1, 6) $ do
+        x <- l
+        return (x, 1)
 
 betterSeed :: IO ()
 betterSeed = do
-    let results = map (\i -> getFirst $ seedTFGen (0, 0, 0, i)) [0..53667]
+    let results = map (\i -> getFirst $ seedTFGen (0, 0, 0, i)) [0 .. 53667]
     mapM_ print $ assocs $ histogram results
 
 -- or another
@@ -30,10 +33,8 @@ randomList :: (Random a) => Int -> [a]
 randomList seed = randoms (mkStdGen seed)
 
 getBounds :: Int -> Int -> (Float, Float, Float)
-getBounds seed n = ( sum randList / fromIntegral n
-                   , minimum randList
-                   , maximum randList
-                   )
+getBounds seed n =
+    (sum randList / fromIntegral n, minimum randList, maximum randList)
   where
     randList = take n (randomList seed :: [Float])
 

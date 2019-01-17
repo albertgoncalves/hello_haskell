@@ -1,15 +1,14 @@
 {-# OPTIONS_GHC -Wall #-}
 
-combine :: Show a => [Char] -> a -> String
+combine :: Show a => String -> a -> String
 combine word number
     | word == "" = show number
-    | otherwise  = word
+    | otherwise = word
 
 main :: IO ()
 main = do
-    let fizzes   = cycle ["", "", "fizz"]         :: [[Char]]
-    let buzzes   = cycle ["", "", "", "", "buzz"] :: [[Char]]
-    let cycles   = zipWith (++) fizzes buzzes     :: [[Char]]
-    let duration = [1..]                          ::  [Int]
-
+    let fizzes = cycle ["", "", "fizz"] :: [String]
+    let buzzes = cycle ["", "", "", "", "buzz"] :: [String]
+    let cycles = zipWith (++) fizzes buzzes :: [String]
+    let duration = [1 ..] :: [Int]
     print $ take 20 $ zipWith combine cycles duration

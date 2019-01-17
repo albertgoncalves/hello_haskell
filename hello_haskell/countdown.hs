@@ -1,14 +1,14 @@
 {-# OPTIONS_GHC -Wall #-}
 
 -- via https://www.youtube.com/watch?v=rlwSBNI9bXE
-
 import Control.Monad (filterM)
 import Data.List (permutations)
 
-data Op = Add
-        | Sub
-        | Mul
-        | Div
+data Op
+    = Add
+    | Sub
+    | Mul
+    | Div
 
 type Result = (Expr, Int)
 
@@ -19,14 +19,17 @@ instance Show Op where
     show Div = "/"
 
 instance Show Expr where
-   show (Val n)     = show n
-   show (App o l r) = bracket l ++ show o ++ bracket r
-                        where
-                          bracket (Val n) = show n
-                          bracket e       = "(" ++ show e ++ ")"
+    show (Val n) = show n
+    show (App o l r) = bracket l ++ show o ++ bracket r
+      where
+        bracket (Val n) = show n
+        bracket e = "(" ++ show e ++ ")"
 
-data Expr = Val Int
-          | App Op Expr Expr
+data Expr
+    = Val Int
+    | App Op
+          Expr
+          Expr
 
 apply :: Op -> Int -> Int -> Int
 apply Add x y = x + y
@@ -36,8 +39,8 @@ apply Div x y = div x y
 
 valid :: Op -> Int -> Int -> Bool
 valid Add x y = x <= y
-valid Sub x y = x >  y
-valid Mul x y = x <= y       && x > 1 && y > 1
+valid Sub x y = x > y
+valid Mul x y = x <= y && x > 1 && y > 1
 valid Div x y = mod x y == 0 && x > 1 && y > 1
 
 powerset :: [a] -> [[a]]
@@ -47,27 +50,25 @@ allPowersets :: [a] -> [[a]]
 allPowersets xs = concatMap permutations $ powerset xs
 
 split :: [a] -> [([a], [a])]
-split ns = map (`splitAt` ns) [1..length ns - 1]
+split ns = map (`splitAt` ns) [1 .. length ns - 1]
 
 results :: [Int] -> [Result]
 results [] = []
 results [n] = [(Val n, n) | n > 0]
-results ns = [res | (ls, rs) <- split ns
-                  , lx       <- results ls
-                  , ry       <- results rs
-                  , res      <- combine lx ry
-                  ]
+results ns =
+    [ res
+    | (ls, rs) <- split ns
+    , lx <- results ls
+    , ry <- results rs
+    , res <- combine lx ry
+    ]
 
 combine :: Result -> Result -> [Result]
-combine (l, x) (r, y) = [(App o l r, apply o x y) | o <- [Add, Sub, Mul, Div]
-                                                  , valid o x y
-                                                  ]
+combine (l, x) (r, y) =
+    [(App o l r, apply o x y) | o <- [Add, Sub, Mul, Div], valid o x y]
 
 solutions :: [Int] -> Int -> [Expr]
-solutions ns n = [e | ns'    <- allPowersets ns
-                    , (e, m) <- results ns'
-                    , m == n
-                    ]
+solutions ns n = [e | ns' <- allPowersets ns, (e, m) <- results ns', m == n]
 
 main :: IO ()
 main = do

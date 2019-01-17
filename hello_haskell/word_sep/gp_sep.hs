@@ -10,8 +10,7 @@ process :: String -> [String]
 process = filter (any $ not . isSpace) . groupBy notDelim
 
 passage :: String
-passage =
-    "Moreover,\n\n because\nphilosophy \nhas its \n\n,, \n\n\n being ..."
+passage = "Moreover,\n\n because\nphilosophy \nhas its \n\n,, \n\n\n being ..."
 
 demo :: IO ()
 demo = mapM_ putStrLn $ process passage

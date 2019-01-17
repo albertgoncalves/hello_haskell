@@ -1,10 +1,10 @@
 {-# OPTIONS_GHC -Wall #-}
 
 -- via http://learnyouahaskell.com/for-a-few-monads-more
-
 import Control.Monad.Writer
 
-type Food  = String
+type Food = String
+
 type Price = Sum Int
 
 isBigGang :: Int -> (Bool, String)
@@ -19,14 +19,14 @@ demo1 :: IO ()
 demo1 = do
     print $ isBigGang 10
     print $ isBigGang 8
-    print $ applyLog (3 , "Smallish gang."     ) isBigGang
+    print $ applyLog (3, "Smallish gang.") isBigGang
     print $ applyLog (30, "A freaking platoon.") isBigGang
-    print $ applyLog ("Tobin", "Got outlaw name.") (\x -> ( length x
-                                                          , "Applied length."
-                                                          )
-                                                   )
+    print $
+        applyLog
+            ("Tobin", "Got outlaw name.")
+            (\x -> (length x, "Applied length."))
 
-applyLog' :: (Monoid m) => (a, m)-> (a -> (b, m)) -> (b, m)
+applyLog' :: (Monoid m) => (a, m) -> (a -> (b, m)) -> (b, m)
 applyLog' (x, oldLog) f = (y, mappend oldLog newLog) -- monoids!
   where
     (y, newLog) = f x
@@ -37,16 +37,16 @@ demo2 = do
     print $ applyLog' (30, "A freaking platoon.") isBigGang
 
 addDrink :: Food -> (Food, Price)
-addDrink "beans" = ("milk"   , Sum 25)
+addDrink "beans" = ("milk", Sum 25)
 addDrink "jerky" = ("whiskey", Sum 99)
-addDrink _       = ("beer"   , Sum 30)
+addDrink _ = ("beer", Sum 30)
 
 demo3 :: IO ()
 demo3 = do
     print $ applyLog' ("beans", Sum (10 :: Int)) addDrink
     print $ applyLog' ("jerky", Sum (25 :: Int)) addDrink
-    print $ ("dogmeat", Sum (5 :: Int)) `applyLog'` addDrink
-                                        `applyLog'` addDrink
+    print $
+        ("dogmeat", Sum (5 :: Int)) `applyLog'` addDrink `applyLog'` addDrink
 
 demo4 :: IO ()
 demo4 = do
@@ -77,7 +77,7 @@ demo5 = do
 
 gcd' :: Int -> Int -> Int
 gcd' a b
-    | b == 0    = a
+    | b == 0 = a
     | otherwise = gcd' b (mod a b)
 
 gcd'' :: Int -> Int -> Writer [String] Int

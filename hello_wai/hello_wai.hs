@@ -1,10 +1,9 @@
 {-# OPTIONS_GHC -Wall #-}
 
 -- via https://www.stackage.org/package/wai
-
-import qualified Data.ByteString.Char8      as B8
+import qualified Data.ByteString.Char8 as B8
 import qualified Data.ByteString.Lazy.Char8 as LB8
-import           Data.CaseInsensitive (mk)
+import Data.CaseInsensitive (mk)
 
 import Network.HTTP.Types
 import Network.Wai
@@ -28,10 +27,10 @@ app request respond = do
     respond $ route $ B8.unpack $ rawPathInfo request
   where
     indexes = ["/", "/index", "/index/"]
-    route "/file"             = file
+    route "/file" = file
     route path
         | path `elem` indexes = index path
-        | otherwise           = notFound
+        | otherwise = notFound
 
 main :: IO ()
 main = do

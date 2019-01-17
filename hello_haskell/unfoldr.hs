@@ -1,22 +1,19 @@
 {-# OPTIONS_GHC -Wall #-}
 
 import Data.List (unfoldr)
-
--- unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
     -- (appendedToList, consideredOnNextIteration)
 
+-- unfoldr :: (b -> Maybe (a, b)) -> b -> [a]
 fibLike :: Integral a => (a, a) -> Maybe (a, (a, a))
 fibLike (a, b) = Just (a, (b, a + b))
 
 -- in the 'fibLike' example, this tuple is simply wrapped in a Just, resulting
 -- in an infinite list
-
 -- the example below articulates a terminal condition with a 'if ... Nothing',
 -- resulting in a finite list
-
 finiteF :: Integral a => a -> Maybe (a, a)
 finiteF x
-    | x <= 0    = Nothing
+    | x <= 0 = Nothing
     | otherwise = Just (x, x - 1)
 
 main :: IO ()

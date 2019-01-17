@@ -6,15 +6,10 @@ diagDiff :: Int -> [Int] -> Int
 diagDiff n lst = abs $ l - r
   where
     i = 1
-    ind = [i..(n * n)]
-    l = sum [y | (x, y) <- zip ind lst
-               , mod (x - 1) (n + 1) == 0
-               ]
-    r = sum [y | (x, y) <- zip ind lst
-               , mod (x - 1) (n - 1) == 0
-               , x /= i
-               , x /= (n * n)
-               ]
+    ind = [i .. (n * n)]
+    il = zip ind lst
+    l = sum [y | (x, y) <- il, mod (x - 1) (n + 1) == 0]
+    r = sum [y | (x, y) <- il, mod (x - 1) (n - 1) == 0, x /= i, x /= (n * n)]
 
 apply :: [Int] -> Int
 apply numInput = diagDiff (head numInput) (tail numInput)

@@ -7,9 +7,9 @@ listStr :: [String] -> [[String]]
 listStr = map words
 
 transformList :: [Int] -> [Int]
-transformList (a:b:c) = map (*2) [a, b] ++ c ++ [1]
-transformList [_]     = []
-transformList []      = []
+transformList (a:b:c) = map (* 2) [a, b] ++ c ++ [1]
+transformList [_] = []
+transformList [] = []
 
 listInt :: [[String]] -> [[Int]]
 listInt = map $ transformList . listStrToInt
@@ -17,7 +17,7 @@ listInt = map $ transformList . listStrToInt
 replaceChar :: Char -> Char -> Char -> Char
 replaceChar x outChar inChar
     | x == outChar = inChar
-    | otherwise    = x
+    | otherwise = x
 
 replaceComma :: Char -> Char
 replaceComma x = replaceChar x ',' ' '
@@ -46,11 +46,7 @@ routine :: String -> String
 routine x = addHeader header'' . prepareOutput . processInput $ input'
   where
     (header', input') = cleanInput x
-    header''          = map addComma (header' ++ " y2")
+    header'' = map addComma (header' ++ " y2")
 
 main :: IO ()
-main =
-    -- withFile filename ReadMode $ \handle -> do
-    --     contents <- hGetContents handle
-    --     print $ routine contents
-    interact routine
+main = interact routine

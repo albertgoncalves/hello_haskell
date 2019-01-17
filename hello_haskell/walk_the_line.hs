@@ -1,24 +1,24 @@
 {-# OPTIONS_GHC -Wall #-}
 
 -- via http://learnyouahaskell.com/a-fistful-of-monads
-
 type Birds = Int
-type Pole  = (Birds, Birds)
+
+type Pole = (Birds, Birds)
 
 landL :: Birds -> Pole -> Maybe Pole
 landL n (l, r)
     | abs ((l + n) - r) < 4 = Just (l + n, r)
-    | otherwise             = Nothing
+    | otherwise = Nothing
 
 landR :: Birds -> Pole -> Maybe Pole
 landR n (l, r)
     | abs (l - (r + n)) < 4 = Just (l, r + n)
-    | otherwise             = Nothing
+    | otherwise = Nothing
 
 demo1 :: IO ()
 demo1 = do
-    print $ landL   2  (0, 0)
-    print $ landR   1  (1, 2)
+    print $ landL 2 (0, 0)
+    print $ landR 1 (1, 2)
     print $ landR (-1) (1, 2)
 
 (-:) :: a -> (a -> b) -> b
@@ -27,12 +27,11 @@ x -: f = f x
 demo2 :: IO ()
 demo2 = do
     print $ (100 :: Int) -: (* 3)
-    print $ True         -: not
-    print $ (0, 0)       -: landL 2
+    print $ True -: not
+    print $ (0, 0) -: landL 2
 
 demo3 :: IO ()
 demo3 = do
-    print $ Nothing        >>= landL 2
     print $ landR 1 (0, 0) >>= landL 2
     print $ landR 2 (0, 0) >>= landL 2 >>= landR 2
     print $ landL 1 (0, 0) >>= landR 4 >>= landL (-1) >>= landR (-2)
@@ -43,10 +42,10 @@ banana _ = Nothing
 
 demo4 :: IO ()
 demo4 = do
-    print $ landL 1 (0, 0) >>= banana  >>= landR 1
-    print $ landL 1 (0, 0) >>  Nothing >>= landR 1
+    print $ landL 1 (0, 0) >>= banana >>= landR 1
+    print $ landL 1 (0, 0) >> Nothing >>= landR 1
                                -- generalized equivalent of 'banana'
-    print $ landL 1 (0, 0) >>  Just (0, 0) >>= landR 1
+    print $ landL 1 (0, 0) >> Just (0, 0) >>= landR 1
                            -- (>>) is something of a manual override
 
 justH :: Maybe Char
@@ -59,11 +58,11 @@ demo5 = print justH
 
 demo6 :: IO ()
 demo6 = do
-    print $ ([1, 2] :: [Int]) >>= \n -> ['a','b'] >>= \ch -> return (n,ch)
+    print $ ([1, 2] :: [Int]) >>= \n -> ['a', 'b'] >>= \ch -> return (n, ch)
     let altDemo6 = do
-        n  <- [1, 2] :: [Int]
-        ch <- ['a', 'b']
-        return (n, ch)
+            n <- [1, 2] :: [Int]
+            ch <- ['a', 'b']
+            return (n, ch)
     print altDemo6
     print ([(n, ch) | n <- [1, 2], ch <- ['a', 'b']] :: [(Int, Char)])
     -- another alternative
@@ -71,17 +70,17 @@ demo6 = do
 routine :: Maybe Pole
 routine = do
     let start = (0, 0)
-    first  <- landL 2 start
+    first <- landL 2 start
     second <- landR 2 first
     landL 1 second
 
 disaster :: Maybe Pole
 disaster = do
     let start = (0, 0)
-    first  <- landL 2 start
-    _      <- Nothing       -- this interrupts the chain
+    first <- landL 2 start
+    _ <- Nothing -- this interrupts the chain
     second <- landR 2 first -- still Nothing, despite calling 'first'
-    landL 1 second          -- see (>>) above
+    landL 1 second -- see (>>) above
 
 main :: IO ()
 main = do
