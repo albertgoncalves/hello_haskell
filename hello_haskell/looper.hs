@@ -9,4 +9,8 @@ loop f x n
     loop' f' x' n' = loop' f' (f' x') (n' - 1)
 
 main :: IO ()
-main = print $ loop (\x -> x + (1 / x)) (0.01 :: Double) (1000000 :: Int)
+main = do
+    let f x' = x' + (1 / x')
+    let x = 0.01 :: Double
+    let n = 1000000 :: Int
+    print $ loop f x n
