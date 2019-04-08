@@ -2,12 +2,12 @@
 
 with pkgs; mkShell {
     name = "haskell";
-    buildInputs = [ (haskell.packages.ghc822.ghcWithPackages (pkgs: [
+    buildInputs = [ (haskell.packages.ghc864.ghcWithPackages (pkgs: [
                       pkgs.vector
                       pkgs.random
                       pkgs.tf-random
                       pkgs.statistics
-                      pkgs.hastache
+                      # pkgs.hastache
                     ]))
                     libiconv
                     fzf

@@ -9,11 +9,11 @@ data Message a = Message
 reflect :: Functor f => (f (a -> b) -> a) -> f (a -> b) -> f b
 reflect r f = ($ r f) <$> f
 
-formatMsg :: String -> String -> String
-formatMsg a b = "message: " ++ a ++ "\nfrom: " ++ b
+format :: String -> String -> String
+format a = (++) ("message: " ++ a ++ "\nfrom: ")
+
+x :: Message String
+x = Message "Alberto" "Hello!"
 
 main :: IO ()
-main = do
-    let msg = Message "Alberto" "Hello!"
-    print msg
-    putStrLn $ messageContent $ reflect messageSender $ fmap formatMsg msg
+main = (putStrLn . messageContent . reflect messageSender . fmap format) x
