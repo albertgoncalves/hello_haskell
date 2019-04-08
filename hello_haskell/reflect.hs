@@ -1,19 +1,23 @@
 {-# OPTIONS_GHC -Wall #-}
 {-# LANGUAGE DeriveFunctor #-}
 
-data Message a = Message
+import Text.Printf (printf)
+
+data Message a b = Message
     { messageSender :: String
-    , messageContent :: a
+    , messageFoo :: a
+    , messageBar :: b
     } deriving (Functor, Show)
 
 reflect :: Functor f => (f (a -> b) -> a) -> f (a -> b) -> f b
-reflect r f = ($ r f) <$> f
+reflect r f = fmap ($ (r f)) f
+-- reflect r f = (flip ($) (r f)) <$> f
 
 format :: String -> String -> String
-format a = (++) ("message: " ++ a ++ "\nfrom: ")
+format = printf "message: %s\nfrom: %s"
 
-x :: Message String
-x = Message "Alberto" "Hello!"
+x :: Message String String
+x = Message "Alberto" "Foo" "Bar"
 
 main :: IO ()
-main = (putStrLn . messageContent . reflect messageSender . fmap format) x
+main = (print . reflect messageSender . fmap format) x
