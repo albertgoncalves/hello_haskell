@@ -12,6 +12,7 @@ Needed things
 ---
 In order to ease installation pain, I took the route of getting started with the [Haskell Platform](https://www.haskell.org/platform/). A more reproducible (and efficient) approach is in the works. If you're cool with installing a large suite of libraries at the root level, that will get you up and running.
 
+---
 Alternatively, if you have **Nix**,
 ```
 $ nix-shell
@@ -24,7 +25,7 @@ With the Haskell Platform installed or a `nix-shell`, any given script can be co
 $ ghc FILENAME.hs
 $ ./FILENAME
 ```
-Or interpreted at run-time with:
+Or compiling and running all-in-one:
 ```bash
 $ runhaskell FILENAME.hs
 ```
